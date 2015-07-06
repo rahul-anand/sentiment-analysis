@@ -18,13 +18,17 @@ f.close()
 #Parallelized API Query
 def processInput(text):  
 	headers = {'X-Mashape-Key': 'JQ5t463vmTmsh57Wdk3HSXs5vguSp1nXi6ZjsnGTrxBULcQMUA','Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json',}
-	text = re.sub('[^a-zA-Z0-9 \n\.]', '', text)
-	r1 = requests.get('https://twinword-sentiment-analysis.p.mashape.com/analyze/?text='+text, headers=headers)
-	resp=r1.text
-	data=json.loads(resp)
-	data['text']=text
-	print text
-	return data
+	try:
+		r1 = requests.get('https://twinword-sentiment-analysis.p.mashape.com/analyze/?text='+text, headers=headers)
+		resp=r1.text
+		data=json.loads(resp)
+		data['text']=text
+		print text
+		return data
+	except:
+		data=[]
+		
+	
 
 from joblib import Parallel, delayed  
 import multiprocessing
